@@ -8,8 +8,11 @@
         <h1>{{ number }}</h1>
       </li>
     </ul>
+    <h1 v-if="loading">loading ...</h1>
+    <img :src="result.message" v-if="loaded"/>
     <h1>{{ persion.name }}</h1>
     <h1>{{ greetings }}</h1>
+    <h1>{{x}}:{{y}}</h1>
     <button @click="increase">+1</button>
     <button @click="updateGreeting">updateTitle</button>
   </div>
@@ -26,7 +29,10 @@ import {
   onUpdated,
   onRenderTriggered,
   watch,
+  onUnmounted
 } from "vue";
+import useMousePosition from './hooks/useMousePostion'
+import useURLLoader from './hooks/useURLLoader'
 interface DataProps {
   count: number;
   double: number;
@@ -44,15 +50,20 @@ export default defineComponent({
     // const double = computed(()=>{
     //   return count.value * 2
     // })
-    onMounted(() => {
-      console.log("on mounted");
-    });
     onUpdated(() => {
       console.log("on updated");
     });
     onRenderTriggered((event) => {
       console.log(event);
     });
+
+    const {
+      result,
+      error,
+      loading,
+      loaded
+    } = useURLLoader("https://dog.ceo/api/breeds/image/random")
+
     const data: DataProps = reactive({
       count: 0,
       double: computed(() => data.count * 2),
@@ -73,11 +84,20 @@ export default defineComponent({
       console.log(oldValue);
       document.title = "update" + greetings.value + data.count;
     });
+
+    const {x, y} = useMousePosition()
+
     const dataRefs = toRefs(data);
     return {
       ...dataRefs,
       greetings,
       updateGreeting,
+      x,
+      y,
+      result,
+      error,
+      loading,
+      loaded
     };
   },
 });
