@@ -1,5 +1,6 @@
 <template>
   <div class=container>
+    <global-header :user="currentUser"></global-header>
     <ColumnList :list="list"></ColumnList>
   </div>
 </template>
@@ -8,7 +9,45 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { defineComponent } from 'vue'
 import ColumnList, {ColumnProps} from "@/components/ColumnList.vue";
+import GlobalHeader, {UserProps} from "@/components/GlobalHeader.vue";
+const currentUser: UserProps = {
+  isLogin: true,
+  name: 'lage'
+}
 const testData: ColumnProps[] = [
+  {
+    id: 1,
+    title: 'test1的专栏',
+    avatar: require('@/assets/logo.png'),
+    description: '这是一个test专栏，非常的有意思哦'
+  },{
+    id: 2,
+    title: 'test2的专栏',
+    // avatar: require('@/assets/logo.png'),
+    description: '这是一个test专栏，非常的有意思哦'
+  },
+  {
+    id: 1,
+    title: 'test1的专栏',
+    avatar: require('@/assets/logo.png'),
+    description: '这是一个test专栏，非常的有意思哦'
+  },{
+    id: 2,
+    title: 'test2的专栏',
+    avatar: require('@/assets/logo.png'),
+    description: '这是一个test专栏，非常的有意思哦'
+  },
+  {
+    id: 1,
+    title: 'test1的专栏',
+    avatar: require('@/assets/logo.png'),
+    description: '这是一个test专栏，非常的有意思哦'
+  },{
+    id: 2,
+    title: 'test2的专栏',
+    avatar: require('@/assets/logo.png'),
+    description: '这是一个test专栏，非常的有意思哦'
+  },
   {
     id: 1,
     title: 'test1的专栏',
@@ -24,11 +63,13 @@ const testData: ColumnProps[] = [
 export default defineComponent({
   name: "App",
   components: {
-    ColumnList
+    ColumnList,
+    GlobalHeader
   },
   setup() {
     return {
-      list: testData
+      list: testData,
+      currentUser
     }
   }
 })
